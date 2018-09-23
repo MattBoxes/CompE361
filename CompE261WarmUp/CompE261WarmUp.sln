@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompE261WarmUp", "CompE261WarmUp\CompE261WarmUp.csproj", "{8D21066E-DB46-4651-B403-928AE5208FCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{627FD809-0286-4BCE-9E79-C518780C2D42}"
+	ProjectSection(SolutionItems) = preProject
+		CompE261WarmUp\Address.cs = CompE261WarmUp\Address.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D21066E-DB46-4651-B403-928AE5208FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D21066E-DB46-4651-B403-928AE5208FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D21066E-DB46-4651-B403-928AE5208FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D21066E-DB46-4651-B403-928AE5208FCB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1AE9EE5-4788-4127-BE38-BDD32436F62F}
+	EndGlobalSection
+EndGlobal
