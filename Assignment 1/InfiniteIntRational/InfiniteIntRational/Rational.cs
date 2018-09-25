@@ -8,12 +8,12 @@ namespace RationalClass
 {
     public class Rational : IComparable 
     {
-        private int Numerator { get; }
-        private int Denominator { get; }
+        private int Numerator { get;}
+        private int Denominator { get;}
 
         public Rational()
         {
-            //default constructor 
+             //default constructor 
             Numerator = 0;
             Denominator = 0;
         }
@@ -32,10 +32,9 @@ namespace RationalClass
                 this.Numerator = numerator / temp;
                 this.Denominator = denominator / temp;
             }
-            catch(DivideByZeroException ex)
+            catch(DivideByZeroException divZero)
             {
-                
-                return;
+                throw divZero;
             }
 
 
@@ -61,14 +60,44 @@ namespace RationalClass
         }
         public int CompareTo(object obj)
         {
-            //compare two rational numbers and return an integer showing how they compare, it is up to you how you are going to handle the conversion of your number to int form 
-            throw new NotImplementedException();
-        }
+            try
+            {   //compare two rational numbers and return an integer showing how they compare, it is up to you how you are going to handle the conversion of your number to int form 
+                Rational otherObj = (Rational)obj;
+                if (this.Equals(otherObj))
+                {
+                    return 0;
+                }
+                else if (this.Denominator <= otherObj.Denominator)
+                {
+                    if (this.Numerator > otherObj.Numerator) { return 1; }
+                    else if (this.Numerator == otherObj.Numerator) { return 0; }
+                }
+                else
+                {
+                    if (this.Denominator > otherObj.Denominator) { return -1; }
+                }
+                return 0;
+            }
+            catch (ArgumentException arg)
+            {
+                throw arg;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
 
+        }
         public override bool Equals(object obj)
         {
             //implement the standard equals method
-            throw new NotImplementedException();
+            Rational otherObj = (Rational)obj;
+            if (this.RationalToDecimal() == otherObj.RationalToDecimal())
+            {
+                return true;
+            }
+            else return false;
+
         }
 
         public override int GetHashCode()
@@ -91,9 +120,9 @@ namespace RationalClass
                 if (Denominator == 0) { strVal = "Undefined"; }
                 return strVal;
             }
-            catch(Exception badToString)
+            catch(Exception badToStringMethod)
             {
-                throw badToString;
+                throw badToStringMethod;
             }
         }
         /// <summary>
@@ -136,22 +165,32 @@ namespace RationalClass
         /// <returns></returns>
         public static Rational operator /(Rational a, Rational b)
         {
-            if (b.Numerator != 0 && b.Denominator != 0)
-            {
-                return new Rational(a.Numerator * b.Denominator, a.Denominator * a.Numerator);
-            }
-            else {
-                Console.WriteLine("Cannot divide by zero or undefined rational");
-                return new Rational(0,0); }
+                if (b.Numerator != 0 && b.Denominator != 0)
+                {
+                    return new Rational(a.Numerator * b.Denominator, a.Denominator * a.Numerator);
+                }
+                else
+                {
+                throw new DivideByZeroException();
+                }
         }
-
+        /// <summary>
+        /// takes the numberator and denominator and converts them to decimal
+        /// then divides those 2 decimal numbers and returns the string inerpolation of the result.
+        /// </summary>
+        /// <returns>string of numberator divded by denominator in decimal form</returns>
         public string RationalToDecimal()
         {
-
-            decimal decimalNumer = Convert.ToDecimal(this.Numerator);
-            decimal decimalDenom = Convert.ToDecimal(this.Denominator);
-            return ($"{decimalNumer / decimalDenom}");
-
+            try
+            {
+                decimal decimalNumer = Convert.ToDecimal(this.Numerator);
+                decimal decimalDenom = Convert.ToDecimal(this.Denominator);
+                return ($"{decimalNumer / decimalDenom}");
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
 
         }
     }

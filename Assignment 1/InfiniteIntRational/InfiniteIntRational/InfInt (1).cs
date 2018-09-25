@@ -34,36 +34,32 @@ namespace InfIntClass
             {
                 Integer = new int[DIGITS];
                 for (int i = 0; i < input.Length; i++)
-                {
-<<<<<<< HEAD
+
                     if (input[i] >= '0' && input[i] <= '9')
                     {
                         Integer[DIGITS - input.Length + i] = input[i] - '0';
                     }
-                    
-=======
-                    if (input[i]>= '0' && input[i] <= '9'){ // for some reason does not catch alphabet characters and just adds them to array
-                        Integer[DIGITS - input.Length + i] = input[i] - '0'; // converting char to decimal value from char code
-                    }
->>>>>>> 62bd845450667933baf1c1540c0cfb07bd375937
-                }
+
+
+
                 if (input[0] != '-')
                     this.Positive = true;
                 else
                     this.Positive = false;
+
             }
             catch (FormatException text)
             {
                 Console.WriteLine("Not a valid number");
                 throw text;
             }
-      
+
             catch (IndexOutOfRangeException tooBig)
             {
                 Console.WriteLine($"you input is too big");
                 throw tooBig;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -165,11 +161,7 @@ public InfInt Add(InfInt addValue)
             else if (!Positive && !addValue.Positive)
             {
 
-<<<<<<< HEAD
-                for (int i = DIGITS-1; i >= 0; i--)
-=======
                 for (int i = DIGITS - 1; i >= 0; i--)
->>>>>>> 62bd845450667933baf1c1540c0cfb07bd375937
                 {
                     if (Integer[i] < addValue.Integer[i])
                     {
@@ -289,15 +281,14 @@ public InfInt Add(InfInt addValue)
             }
             else
             {
-                for (int i = DIGITS - 1; i >= 0; i--)
+                for (int i = (DIGITS - 1); i >= 0; i--)
                 {
-                    int offset = DIGITS - i - 1;
+                    int offset = i;
                     carry = 0;
-          
-                    
-                        for (int j = DIGITS - 1; j >= 0; j--)
+
+                for (int j = (DIGITS - 1); j >= 0; j--)
                         {
-                            temp.Integer[j-offset] = temp.Integer[j-offset] + (this.Integer[i] * multValue.Integer[j]) + carry;
+                            temp.Integer[j+offset] = temp.Integer[j+offset] + (this.Integer[i] * multValue.Integer[j]) + carry;
                             if (temp.Integer[j] > 9)
                             {
                                 carry = temp.Integer[j] / 10;
@@ -305,8 +296,6 @@ public InfInt Add(InfInt addValue)
                             }
                             else carry = 0;
                         }
-                    
-
                 }
                 return temp;
             }
