@@ -19,36 +19,31 @@ namespace InfIntClass
             Positive = true;
         }
 
-        public InfInt(string input)
-        {
-            //accepts a string value of your infint and initialize the fields
-            //remember you are allowed a max length of 40 and it can be a negative number
-            //if you have a negative number the length could be 41 to account for the '-' in front
+        
+        public InfInt(string input){
             try
             {
-                Integer = new int[DIGITS];
+                // taking size as DIGITS and not actual input.length as in rest of the program DIGITS is used
+                this.Integer = new int[DIGITS];
                 for (int i = 0; i < input.Length; i++)
                 {
-                    
-                    Integer[i] = input[i] - '0';
-                    if (input[0] == '-')
-                    {
-                        Positive = false;
-                    }
-                    Console.Write($"{Integer[i]}");
+                    Integer[DIGITS - input.Length + i] = input[i] - '0';
                 }
+
+                if (input[0] != '-')
+                    this.Positive = true;
+                else
+                    this.Positive = false;
             }
-            catch(FormatException text)
+            catch(IndexOutOfRangeException tooBig)
             {
-                Console.WriteLine("Not a valid number");
-                throw text;
+                Console.WriteLine($"you input is too big");
+                throw tooBig;
             }
-            catch(IndexOutOfRangeException text)
-            {
-                Console.WriteLine("Number too larger");
-                throw text;
-            }
-        }
+            catch(Exception e) { throw e; }
+
+   }
+           
         //freebie add courtesy of professor amack
         public InfInt Add(InfInt addValue)
         {
@@ -241,24 +236,53 @@ namespace InfIntClass
 
         public InfInt Multiply(InfInt multValue)
         {
-            throw new NotImplementedException();
+            InfInt temp = new InfInt();
+            return temp;
         }
 
         public InfInt Divide(InfInt divValue)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Had longer method but found easier solution. joins array into a string
+        /// </summary>
+        /// <returns>string of value</returns>
         public override string ToString()
         {
-             return 
+            return string.Join("", Integer);
         }
 
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
-        }
-
-
+            try
+            {
+                InfInt otherInt = (InfInt)obj;
+                if (Integer.ToString() == otherInt.ToString()) //check if exact same value before looping
+                {
+                    return 0;
+                }
+                else
+                {
+                    for (int i = 0; i < DIGITS; i++)
+                    {
+                        if (Integer[i] > otherInt.Integer[i])
+                            return -1;
+                        else if (Integer[i] < otherInt.Integer[i])
+                            return 1;
+                    }
+                    return 0;
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
     }
+}
+
+
+    
+
 }
