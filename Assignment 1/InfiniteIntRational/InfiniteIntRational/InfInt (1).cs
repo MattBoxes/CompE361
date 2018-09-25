@@ -27,7 +27,11 @@ namespace InfIntClass
                 this.Integer = new int[DIGITS];
                 for (int i = 0; i < input.Length; i++)
                 {
-                    Integer[DIGITS - input.Length + i] = input[i] - '0';
+                    if (input[i] >= '0' && input[i] <= '9')
+                    {
+                        Integer[DIGITS - input.Length + i] = input[i] - '0';
+                    }
+                    
                 }
 
                 if (input[0] != '-')
@@ -134,7 +138,7 @@ namespace InfIntClass
             else if (!Positive && !addValue.Positive)
             {
 
-                for (int i = 0; i >= 0; i++)
+                for (int i = DIGITS-1; i >= 0; i--)
                 {
                     if (Integer[i] < addValue.Integer[i])
                     {

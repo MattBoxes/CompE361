@@ -11,7 +11,7 @@ namespace InfiniteIntRational
     {
         static void Main(string[] args)
         {
-            InfInt test1 = new InfInt("123456789012345678901234567890123467890");
+            InfInt test1 = new InfInt("-3456789012345678901234567890123467890");
             InfInt test2 = new InfInt("3241");
             InfInt test3 = new InfInt("1453242414");
             
