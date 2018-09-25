@@ -251,7 +251,7 @@ namespace InfIntClass
 
         public override string ToString()
         {
-             return 
+            throw new NotImplementedException();
         }
 
         public int CompareTo(object obj)
