@@ -19,33 +19,52 @@ namespace InfIntClass
             Positive = true;
         }
 
-        
-        public InfInt(string input){
+        /// <summary>
+        /// Takes in string input and transfers it into int array called Integer.
+        /// loop through string length and check if valid numerical chars before putting into array.
+        /// puts numbers at end of array for easier operation on values.
+        /// checks for negative at beginning.
+        /// Does not remove non numerical values but just uses their character code as a value.
+        /// Recieved portion of this code from StackExchange
+        /// </summary>
+        /// <param name="input"></param>
+        public InfInt(string input)
+        {
             try
             {
-                // taking size as DIGITS and not actual input.length as in rest of the program DIGITS is used
-                this.Integer = new int[DIGITS];
+                Integer = new int[DIGITS];
                 for (int i = 0; i < input.Length; i++)
                 {
-                    Integer[DIGITS - input.Length + i] = input[i] - '0';
+                    if (input[i]>= '0' && input[i] <= '9'){ // for some reason does not catch alphabet characters and just adds them to array
+                        Integer[DIGITS - input.Length + i] = input[i] - '0'; // converting char to decimal value from char code
+                    }
                 }
-
                 if (input[0] != '-')
                     this.Positive = true;
                 else
                     this.Positive = false;
             }
-            catch(IndexOutOfRangeException tooBig)
+            catch (FormatException text)
+            {
+                Console.WriteLine("Not a valid number");
+                throw text;
+            }
+      
+            catch (IndexOutOfRangeException tooBig)
             {
                 Console.WriteLine($"you input is too big");
                 throw tooBig;
             }
-            catch(Exception e) { throw e; }
-
-   }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
            
-        //freebie add courtesy of professor amack
-        public InfInt Add(InfInt addValue)
+
+
+//freebie add courtesy of professor amack
+public InfInt Add(InfInt addValue)
         {
             InfInt temp = new InfInt();
             if (Positive == addValue.Positive)
@@ -119,7 +138,11 @@ namespace InfIntClass
 
             return temp;
         }
-
+        /// <summary>
+        /// Checks if argument passed in is greater than or equal to calling function
+        /// </summary>
+        /// <param name="addValue"></param>
+        /// <returns>true if greater than, false if not</returns>
         private bool IsGreaterThan(InfInt addValue)
         {
             bool isGreater = true;
@@ -134,7 +157,7 @@ namespace InfIntClass
             else if (!Positive && !addValue.Positive)
             {
 
-                for (int i = 0; i >= 0; i++)
+                for (int i = DIGITS - 1; i >= 0; i--)
                 {
                     if (Integer[i] < addValue.Integer[i])
                     {
@@ -163,7 +186,11 @@ namespace InfIntClass
 
             return isGreater;
         }
-
+        /// <summary>
+        /// Adds two values if both are postive, check with greather than
+        /// </summary>
+        /// <param name="addValue"></param>
+        /// <returns></returns>
         private InfInt AddPositives(InfInt addValue)
         {
             InfInt temp = new InfInt();
@@ -191,7 +218,12 @@ namespace InfIntClass
 
             return temp;
         }
-
+        /// <summary>
+        /// Subtracts from InfInt by looping through array at DIGITS-1 to 0
+        /// uses helper functions like greaterthan and subtractpositives
+        /// </summary>
+        /// <param name="subtractValue"></param>
+        /// <returns>negative or positive InfInt Value</returns>
         public InfInt Subtract(InfInt subtractValue)
         {
             InfInt temp = new InfInt(); // temporary result
@@ -236,25 +268,88 @@ namespace InfIntClass
 
         public InfInt Multiply(InfInt multValue)
         {
-            InfInt temp = new InfInt();
-            return temp;
-        }
+            InfInt temp = new InfInt("0");
+            int carry = 0;
+            if ((multValue.ToString() == "0" || multValue.ToString() == "-0") || (this.ToString() == "0" || this.ToString() == "-0"))
+            {
+                temp = new InfInt("0");
+                return temp;
+            }
+            else
+            {
+                for (int i = DIGITS - 1; i >= 0; i--)
+                {
+                    int offset = DIGITS - i - 1;
+                    carry = 0;
+          
+                    
+                        for (int j = DIGITS - 1; j >= 0; j--)
+                        {
+                            temp.Integer[j-offset] = temp.Integer[j-offset] + (this.Integer[i] * multValue.Integer[j]) + carry;
+                            if (temp.Integer[j] > 9)
+                            {
+                                carry = temp.Integer[j] / 10;
+                                temp.Integer[j] %= 10;
+                            }
+                            else carry = 0;
+                        }
+                    
 
-        public InfInt Divide(InfInt divValue)
-        {
-            throw new NotImplementedException();
+                }
+                return temp;
+            }
+
         }
         /// <summary>
-        /// Had longer method but found easier solution. joins array into a string
+        /// calling function is divided by value passed in.
+        /// 
+        /// </summary>
+        /// <param name="divValue"></param>
+        /// <returns></returns>
+        public InfInt Divide(InfInt divValue)
+        {
+            InfInt quotient = new InfInt();
+            InfInt Dividend = this; // assigned to new infint because 'this' is read only
+            try
+            {
+                if (divValue.ToString() == "0" || divValue.ToString() == "-0") //cannot divide by 0
+                {
+                    Console.WriteLine("Cannot Divide by 0");
+                    return null;
+                }
+                else
+                {
+                   
+                    // if the divisor is not bigger than dividend the divide
+                    while (Dividend.IsGreaterThan(divValue))
+                    { // if the divisor is not bigger than dividend the divide
+                        
+                        Dividend = Dividend.Subtract(divValue);
+                        quotient = quotient.Add(new InfInt("1")); // increment quotient
+                      
+                    }
+                    return quotient;
+                }
+            }
+            catch(FormatException badDivisor)
+            {
+                throw badDivisor;
+            }
+        }
+        /// <summary>
+        /// joins array into string then trims remaining zeros. will then add negative sign if needed
         /// </summary>
         /// <returns>string of value</returns>
         public override string ToString()
         {
-<<<<<<< HEAD
-            throw new NotImplementedException();
-=======
-            return string.Join("", Integer);
->>>>>>> refs/remotes/origin/master
+            
+            string strVal = string.Join("", Integer);
+            strVal = strVal.TrimStart('0');
+            if (strVal == "") { strVal = "0"; }
+            if (!Positive) { strVal = $"-{strVal}"; };
+
+            return strVal;
+
         }
 
         public int CompareTo(object obj)
@@ -271,9 +366,9 @@ namespace InfIntClass
                     for (int i = 0; i < DIGITS; i++)
                     {
                         if (Integer[i] > otherInt.Integer[i])
-                            return -1;
-                        else if (Integer[i] < otherInt.Integer[i])
                             return 1;
+                        else if (Integer[i] < otherInt.Integer[i])
+                            return -1;
                     }
                     return 0;
                     
