@@ -28,10 +28,10 @@ namespace InfiniteIntRational
            InfInt test1 = new InfInt("40");
            InfInt test2 = new InfInt("400");
            InfInt test3 = new InfInt("1453242414");
-                infRational bigfrac = new infRational(test1, test2);
-                infRational bigfrac2 = new infRational("23141", "-312");
-
-           Console.WriteLine($" Addition: {test1.Add(test2)}");
+           infRational bigfrac = new infRational(test1, test2);
+           infRational bigfrac2 = new infRational("23141", "312");
+           infRational bigfrac3 = new infRational("23141", "312");
+                Console.WriteLine($" Addition: {test1.Add(test2)}");
                 //Console.WriteLine($" subtraction: {test2.Subtract(test1)}");
                 //Console.WriteLine($"compareto: {test1.CompareTo(test2)}");
                 //Console.WriteLine($" divide: {test1.Divide(test2)}");
@@ -39,6 +39,7 @@ namespace InfiniteIntRational
 
                 Console.WriteLine($"{bigfrac}");
                 Console.WriteLine($"{bigfrac2}");
+                Console.WriteLine($"{bigfrac2.CompareTo(bigfrac3)}");
             }
             catch (DivideByZeroException e)
             {

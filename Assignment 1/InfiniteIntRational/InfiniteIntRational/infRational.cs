@@ -8,7 +8,7 @@ using RationalClass;
 
 namespace infRationalClass
 {
-    public class infRational : Rational
+    public class infRational : IComparable
     {
         private InfInt Numerator { get; set; }
         private InfInt Denominator { get; set; }
@@ -65,9 +65,38 @@ namespace infRationalClass
                 throw badToStringMethod;
             }
         }
-        public int CompareTo(object obj)
+        public int CompareTo(object obj) //todo fix
         {
-            throw new NotImplementedException();
+            infRational otherObj = (infRational)obj;
+
+            if (this.Denominator.CompareTo(otherObj.Denominator) <= 0) // if denominator less than other
+            {
+                if (this.Numerator.CompareTo(otherObj.Numerator) > 0) { return 1; }//if numerator greater than other return 1
+                else if (this.Numerator == otherObj.Numerator) { return 0; } // if numerators equal return 0
+                
+            }
+            else
+            {
+                if (this.Denominator.CompareTo(otherObj.Denominator) > 0) { return -1; }// if denom greater than other                else()
+                
+            }
+            return 0;
         }
+        public override bool Equals(object obj)
+        {
+            //implement the standard equals method
+            infRational otherObj = (infRational)obj;
+            if ((this.Numerator == otherObj.Numerator) && (this.Denominator == otherObj.Denominator) && (this.Positive == otherObj.Positive))
+            {
+                return true;
+            }
+            else return false;
+
+        }
+    }
+    public static infRational add(infRational a, infRational b) 
+    {
+        return new infRational(a.Denominator + b.Numerator * a.Denominator,
+            a.Denominator * b.Denominator);
     }
 }
